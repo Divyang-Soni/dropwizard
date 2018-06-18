@@ -1,6 +1,5 @@
 package io.dropwizard.http2;
 
-import com.google.common.net.HttpHeaders;
 import io.dropwizard.Configuration;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
@@ -15,14 +14,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Http2CIntegrationTest  extends AbstractHttp2Test {
-
-
     @Rule
     public DropwizardAppRule<Configuration> appRule = new DropwizardAppRule<>(
             FakeApplication.class, ResourceHelpers.resourceFilePath("test-http2c.yml"));

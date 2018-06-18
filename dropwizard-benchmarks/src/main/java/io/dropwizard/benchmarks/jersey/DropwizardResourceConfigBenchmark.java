@@ -1,7 +1,6 @@
 package io.dropwizard.benchmarks.jersey;
 
 import com.codahale.metrics.MetricRegistry;
-import com.google.common.collect.ImmutableList;
 import io.dropwizard.jersey.DropwizardResourceConfig;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -19,6 +18,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -76,7 +76,7 @@ public class DropwizardResourceConfigBenchmark {
 
         @GET
         public List<String> getAll() {
-            return ImmutableList.of("first_asset", "second_asset");
+            return Arrays.asList("first_asset", "second_asset");
         }
 
         @DELETE
@@ -141,7 +141,7 @@ public class DropwizardResourceConfigBenchmark {
 
         @GET
         public List<String> getAll() {
-            return ImmutableList.of("first_cluster", "second_cluster", "third_cluster");
+            return Arrays.asList("first_cluster", "second_cluster", "third_cluster");
         }
 
         @DELETE

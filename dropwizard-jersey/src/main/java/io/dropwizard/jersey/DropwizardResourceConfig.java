@@ -4,9 +4,6 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.jersey2.InstrumentedResourceMethodApplicationListener;
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.Ordering;
 import io.dropwizard.jersey.caching.CacheControlledResponseFeature;
 import io.dropwizard.jersey.params.AbstractParamConverterProvider;
 import io.dropwizard.jersey.sessions.SessionFactoryProvider;
@@ -105,7 +102,6 @@ public class DropwizardResourceConfig extends ResourceConfig {
      *
      * @return all registered types
      */
-    @VisibleForTesting
     Set<Class<?>> allClasses() {
         final Set<Class<?>> allClasses = new HashSet<>(getClasses());
         for (Object singleton : getSingletons()) {
@@ -168,7 +164,6 @@ public class DropwizardResourceConfig extends ResourceConfig {
         return msg.toString();
     }
 
-    @VisibleForTesting
     String cleanUpPath(String path) {
         return PATH_DIRTY_SLASHES.matcher(path).replaceAll("/").trim();
     }
@@ -265,10 +260,9 @@ public class DropwizardResourceConfig extends ResourceConfig {
 
         @Override
         public int compare(EndpointLogLine endpointA, EndpointLogLine endpointB) {
-            return ComparisonChain.start()
-                .compare(endpointA.basePath, endpointB.basePath)
-                .compare(endpointA.httpMethod, endpointB.httpMethod, Comparator.nullsLast(Ordering.natural()))
-                .result();
+            return Comparator.<EndpointLogLine, String>comparing(endpoint -> endpoint.basePath)
+                    .thenComparing(endpoint -> endpoint.httpMethod, Comparator.nullsLast(Comparator.naturalOrder()))
+                    .compare(endpointA, endpointB);
         }
     }
 

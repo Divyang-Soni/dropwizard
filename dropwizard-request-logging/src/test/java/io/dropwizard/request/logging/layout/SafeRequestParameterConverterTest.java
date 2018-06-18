@@ -2,7 +2,6 @@ package io.dropwizard.request.logging.layout;
 
 import ch.qos.logback.access.spi.AccessEvent;
 import ch.qos.logback.access.spi.ServerAdapter;
-import com.google.common.collect.ImmutableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +9,7 @@ import org.mockito.Mockito;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.Vector;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +25,7 @@ public class SafeRequestParameterConverterTest {
         accessEvent = new AccessEvent(httpServletRequest, Mockito.mock(HttpServletResponse.class),
             Mockito.mock(ServerAdapter.class));
 
-        safeRequestParameterConverter.setOptionList(ImmutableList.of("name"));
+        safeRequestParameterConverter.setOptionList(Collections.singletonList("name"));
         safeRequestParameterConverter.start();
     }
 
